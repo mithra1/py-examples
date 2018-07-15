@@ -1,6 +1,6 @@
 from flask import Flask , render_template,request
 from datetime import datetime
-
+from horoscopeapi import get_horoscope, zodiac_sign
 
 #This is create instance of Flask. app is variable
 app = Flask("MyApp")
@@ -8,9 +8,8 @@ app = Flask("MyApp")
 
 #Default route his method will be called when you hit http://127.0.0.0:5000/
 @app.route("/")
-def hello():
+def home():
 	return render_template ("home.html") # render_template method is a special function flask which redirect to the html file mentioned in the paramter
-
 
 #This method will be called when you hit http://127.0.0.0:5000/writeanythinghere
 #This is an example when you want to hit a URL with Paramaters. This is called GET request.
@@ -52,6 +51,17 @@ def read_form_data():
 	generation= calculate_generation(year) #Calling internal method which takes year as a paramter and return text
 	
 	return render_template ("showmygeneration.html",gen_cohort=generation)
+
+
+@app.route("/horoscope")
+def horoscope():
+	return render_template ("horoscope.html") # render_template method is a special function flask which redirect to the html file mentioned in the paramter
+
+
+@app.route("/myhoroscope", methods=["POST"])
+def myhoroscope():
+	result ='No data'
+	return render_template ("showmyhoroscope.html", data=result) # render_template method is a special function flask which redirect to the html file mentioned in the paramter
 
 
 #When you run this file with python this line executed and since app variable is Flask type (defined on line 5)
